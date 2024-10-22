@@ -1,0 +1,290 @@
+[
+    {
+        "id": "4dc6979afdd88d13",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c8ce5a03c6a2994d",
+        "type": "ibmiot in",
+        "z": "4dc6979afdd88d13",
+        "authentication": "apiKey",
+        "apiKey": "4ae3a145add1b00f",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "1234",
+        "applicationId": "",
+        "deviceType": "abcd",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": "",
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "2614ecba6af8da61",
+                "013c466aa25b5811",
+                "f66c72b3fe94ba71",
+                "15479a03b3da5d45",
+                "83381d9d24a6714b"
+            ]
+        ]
+    },
+    {
+        "id": "2614ecba6af8da61",
+        "type": "debug",
+        "z": "4dc6979afdd88d13",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "013c466aa25b5811",
+        "type": "function",
+        "z": "4dc6979afdd88d13",
+        "name": "Temp Display",
+        "func": "msg.payload=msg.payload.temperature\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "f041ed8089031ffc"
+            ]
+        ]
+    },
+    {
+        "id": "f041ed8089031ffc",
+        "type": "ui_chart",
+        "z": "4dc6979afdd88d13",
+        "name": "",
+        "group": "d6efe9721f0735ad",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-1.30",
+        "ymax": "300",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#0095ff",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 470,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f66c72b3fe94ba71",
+        "type": "function",
+        "z": "4dc6979afdd88d13",
+        "name": "Temperature",
+        "func": "msg.payload=msg.payload.temperature\nif(msg.payload>0)\n{\n    msg.payload=\"Temperaturen has increased,not safe for workers\"\n}\nelse\n{\n    msg.payload=\"Normal Temperature is maintained!\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "f4ee05b8bd6d5bbe"
+            ]
+        ]
+    },
+    {
+        "id": "f4ee05b8bd6d5bbe",
+        "type": "ui_text",
+        "z": "4dc6979afdd88d13",
+        "group": "d6efe9721f0735ad",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temp Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 490,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "15479a03b3da5d45",
+        "type": "function",
+        "z": "4dc6979afdd88d13",
+        "name": "Pulse",
+        "func": "msg.payload=msg.payload.Pulse\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 400,
+        "wires": [
+            [
+                "13c0f3f445f32c00"
+            ]
+        ]
+    },
+    {
+        "id": "83381d9d24a6714b",
+        "type": "function",
+        "z": "4dc6979afdd88d13",
+        "name": "Pulse Message",
+        "func": "msg.payload = msg.payload.Pulse\nif (msg.payload<60 || msg.payload==60)\n {\n    msg.payloads = \"The Pulse has Fallen!!\";\n }\nelse if (msg.payload > 60 && msg.payload < 100)\n{\n    msg.payloads = \"The Worker has normal pulserate!\";\n}\nelse if (msg.payload > 100 || msg.payload==100)\n{\n    msg.payloads = \"The Pulse is High!\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 480,
+        "wires": [
+            [
+                "39d235f2600b4706"
+            ]
+        ]
+    },
+    {
+        "id": "13c0f3f445f32c00",
+        "type": "ui_chart",
+        "z": "4dc6979afdd88d13",
+        "name": "",
+        "group": "d6efe9721f0735ad",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Pulse Rate",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "50",
+        "ymax": "150",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#00ff00",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 510,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39d235f2600b4706",
+        "type": "ui_text",
+        "z": "4dc6979afdd88d13",
+        "group": "d6efe9721f0735ad",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Pulse Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 530,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4ae3a145add1b00f",
+        "type": "ibmiot",
+        "name": "IBMiotapi",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "d6efe9721f0735ad",
+        "type": "ui_group",
+        "name": "Industrial workers health and safety monitoring system ",
+        "tab": "ca029ad775174801",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ca029ad775174801",
+        "type": "ui_tab",
+        "name": "Temperature",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
